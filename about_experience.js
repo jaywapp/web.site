@@ -45,10 +45,9 @@ function write(jsonText) {
 
     compary.append(createTextElement('div', 'title', '경력'));
 
-    for (var i = 0; i < json.length; i++) {
-        compary.append(craeteTypeElement('timeline_item', json[i]));
-    }
-
+    json.forEach(element => {
+        intro.append(craeteTypeElement('timeline_item', element));
+    });
 
     grid.append(compary);
 }

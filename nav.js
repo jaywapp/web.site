@@ -27,34 +27,36 @@ function getLinksElement() {
     // <ul class="nav-links"></ul>
     ul.setAttribute('class', 'nav-links');
 
-    for (var i = 0; i < htmls.length; i++) {
+    htmls.forEach(h => {
+        
+        var name = h.name;
+        var value = h.value;
 
-        var text = document.createTextNode(htmls[i].name);
+        var text = document.createTextNode(name);
 
         // <a></a>
         var a = document.createElement('a');
 
-        // <a href="[htmls[i].value]"></a>
-        a.setAttribute('href', htmls[i].value);
-        // <a href="[htmls[i].value]">[htmls[i].name]</a>
+        // <a href="[value]"></a>
+        a.setAttribute('href', value);
+        // <a href="[value]">[name]</a>
         a.append(text);
     
         // <li></li>
         var li = document.createElement('li');
-        // <li><a href="[htmls[i].value]">[htmls[i].name]</a></li>
+        // <li><a href="[value]">[name]</a></li>
         li.append(a);
 
         /*
         <ul class="nav-links">
-            <li><a href="[htmls[i].value]">[htmls[i].name]</a></li>
+            <li><a href="[value]">[name]</a></li>
             .
             .
             .
         </ul>
         */
         ul.append(li);
-
-    }
+    });
 
     /*
     <ul class="nav-links">

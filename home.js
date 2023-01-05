@@ -39,12 +39,8 @@ function getCellElement(index, path){
 var grid = document.createElement('div');
 grid.setAttribute('class', 'picture_grid');
 
-for (var i = 0; i < images.length; i++) {
-    
-    var path = images[i];
-    var idx = i + 1;
-
-    grid.append(getCellElement(idx, path));
-}
+images.forEach(img => {
+    grid.append(getCellElement(i + 1, img));
+});
 
 document.body.append(grid);

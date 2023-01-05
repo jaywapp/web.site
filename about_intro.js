@@ -43,9 +43,9 @@ function write(jsonText) {
 
     intro.append(createTextElement('div', 'title', '소개'));
 
-    for (var i = 0; i < json.length; i++) {
-        intro.append(craeteTypeElement('intro_item', json[i]));
-    }
+    json.forEach(element => {
+        intro.append(craeteTypeElement('intro_item', element));
+    });
 
     grid.append(intro);
 }
