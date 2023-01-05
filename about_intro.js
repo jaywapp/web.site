@@ -1,12 +1,5 @@
-const items =[
-    { title : '이름', content : '박준영'},
-    { title : '생년월일', content : '1991.08.16'},
-    { title : '지역', content : '경기도 수원'},
-    { title : '좋아하는 것', content : '여행, 음악, 스포츠'},
-    { title : 'Mail', content : 'jaywapp16@gmail.com'}
-]
 
-function createTextElement(tag, id, value){
+function createTextElement(tag, id, value) {
     var ele = document.createElement(tag);
     ele.setAttribute('id', id);
     ele.append(document.createTextNode(value));
@@ -14,8 +7,8 @@ function createTextElement(tag, id, value){
     return ele;
 }
 
-function craeteTypeElement(id, item){
-    
+function craeteTypeElement(id, item) {
+
     var div = document.createElement('div');
     div.setAttribute('id', id);
 
@@ -25,16 +18,34 @@ function craeteTypeElement(id, item){
     return div;
 }
 
-var grid = document.getElementById('grid');
+const path = './data/intro.json';
 
-var intro = document.createElement('div');
-intro.setAttribute('id', 'sub_grid');
-intro.setAttribute('class', 'intro');
+let http = new XMLHttpRequest();
 
-intro.append(createTextElement('div', 'title', '소개'));
-
-for(var i = 0; i<items.length; i++){
-    intro.append(craeteTypeElement('intro_item', items[i]));
+http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+        write(this.responseText); //this = http
+    }
 }
 
-grid.append(intro);
+http.open("GET", path, true);
+http.send();
+
+function write(jsonText) {
+
+    let json = JSON.parse(jsonText)
+
+    var grid = document.getElementById('grid');
+
+    var intro = document.createElement('div');
+    intro.setAttribute('id', 'sub_grid');
+    intro.setAttribute('class', 'intro');
+
+    intro.append(createTextElement('div', 'title', '소개'));
+
+    for (var i = 0; i < json.length; i++) {
+        intro.append(craeteTypeElement('intro_item', json[i]));
+    }
+
+    grid.append(intro);
+}

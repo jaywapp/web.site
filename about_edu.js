@@ -1,9 +1,4 @@
-const items =[
-    { title : '아주대학교', date : '2010.03 ~ 2017.02', comment : '정보컴퓨터공학부'},
-    { title : '광주고등학교', date : '2007.03 ~ 2010.02', comment : '경기도'}
-]
-
-function createTextElement(tag, id, value){
+function createTextElement(tag, id, value) {
     var ele = document.createElement(tag);
     ele.setAttribute('id', id);
     ele.append(document.createTextNode(value));
@@ -12,7 +7,7 @@ function createTextElement(tag, id, value){
 }
 
 
-function craeteTypeElement(id, item){
+function craeteTypeElement(id, item) {
 
     var div = document.createElement('div');
     div.setAttribute('id', id);
@@ -24,17 +19,36 @@ function craeteTypeElement(id, item){
     return div;
 }
 
-var grid = document.getElementById('grid');
+const path = './data/edu.json';
 
-var education = document.createElement('div');
-education.setAttribute('id', 'sub_grid');
-education.setAttribute('class', 'education');
+let http = new XMLHttpRequest();
 
-education.append(createTextElement('div', 'title', '학력'));
-
-for(var i = 0; i<items.length; i++){
-    education.append(craeteTypeElement('timeline_item', items[i]));
+http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+        write(this.responseText); //this = http
+    }
 }
 
+http.open("GET", path, true);
+http.send();
 
-grid.append(education);
+
+function write(jsonText) {
+
+    let json = JSON.parse(jsonText)
+
+    var grid = document.getElementById('grid');
+
+    var education = document.createElement('div');
+    education.setAttribute('id', 'sub_grid');
+    education.setAttribute('class', 'education');
+
+    education.append(createTextElement('div', 'title', '학력'));
+
+    for (var i = 0; i < json.length; i++) {
+        education.append(craeteTypeElement('timeline_item', json[i]));
+    }
+
+
+    grid.append(education);
+}
